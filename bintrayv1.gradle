@@ -7,6 +7,9 @@ if (project.hasProperty("android")) { // Android libraries
         classifier = 'sources'
         from android.sourceSets.main.java.srcDirs
     }
+    task javadoc(type: Javadoc) {
+        
+    }
 
     
 } else { // Java libraries
@@ -15,11 +18,15 @@ if (project.hasProperty("android")) { // Android libraries
         from sourceSets.main.allSource
     }
 }
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
 
 
 
 artifacts {
-    
+    archives javadocJar
     archives sourcesJar
 }
 
